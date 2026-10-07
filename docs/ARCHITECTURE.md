@@ -135,7 +135,18 @@ Rules the steps above leave open:
 
 ### 4.6 Runtime validation
 
-`flow.validate(json)` checks a sequence loaded from outside TypeScript: action names exist, refs point to earlier `as` names, and `as` names are unique. It returns `{ ok: true, sequence } | { ok: false, issues }` with a step index and a message per issue. Param **shapes** aren't validated at runtime in v0, because that would need a schema per action. Documented as a known limit.
+`flow.validate(json, { input? })` checks a sequence loaded from outside TypeScript. It returns `{ ok: true, sequence } | { ok: false, issues }` and collects every issue in one pass. An issue is `{ index?, path, message }`: `index` is the step (absent for problems with the sequence as a whole), and `path` locates the problem inside it (`action`, `when`, `params.body.id`).
+
+It checks that:
+
+- the input is an array of objects, and steps have no keys other than `action`, `params`, `as`, `when` and `onError`. Unknown keys are rejected because the runner would otherwise ignore a typo such as `onerror` silently;
+- `action` names a registered action, `as` is a string, `when` is a `$ref` and `onError` is `'abort'` or `'continue'`;
+- every ref, `when` and `{$…}` placeholder names a value defined by an **earlier** step. `Unknown ref` means no step defines it, `used before it is defined` means a later or the same step does;
+- `as` names are unique.
+
+`input` lists the names the caller will pass to `run`, so refs to them are accepted. A step can't reuse one of those names as its `as`.
+
+Param **shapes** and ref **paths** (`$draft.nope`) aren't validated at runtime in v0, because that would need a schema per action and per result. Documented as a known limit. Ref syntax lives in one place (`collectRefs` in `resolve.ts`), shared with the runner.
 
 ## 5. OpenAPI adapter
 

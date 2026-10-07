@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { resolveValue, UnresolvedRefError } from './resolve';
+import { collectRefs, resolveValue, UnresolvedRefError } from './resolve';
 
 const ctx = { draft: { customer: 'Acme', amount: 5, tags: ['a'] }, id: 7, nothing: undefined };
 
@@ -61,5 +61,26 @@ describe('resolveValue', () => {
   it('does not treat inherited properties as refs', () => {
     expect(() => resolveValue('$toString', ctx)).toThrow(UnresolvedRefError);
     expect(() => resolveValue('$draft.toString', ctx)).toThrow(UnresolvedRefError);
+  });
+});
+
+describe('collectRefs', () => {
+  it('finds refs and template placeholders with their location', () => {
+    expect(
+      collectRefs({ body: '$draft', to: '/a/{$x.id}/{$y}', list: ['ok', { deep: '$z.0' }], n: 1 }),
+    ).toEqual([
+      { at: 'body', path: 'draft' },
+      { at: 'to', path: 'x.id' },
+      { at: 'to', path: 'y' },
+      { at: 'list.1.deep', path: 'z.0' },
+    ]);
+  });
+
+  it('reports a top-level ref at an empty location', () => {
+    expect(collectRefs('$a.b')).toEqual([{ at: '', path: 'a.b' }]);
+  });
+
+  it('skips $$ escapes and plain values', () => {
+    expect(collectRefs(['$$a', 'costs $5', 'plain', 3, null, undefined, true])).toEqual([]);
   });
 });

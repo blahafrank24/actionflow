@@ -17,5 +17,8 @@ export type {
   RuntimeStep,
   StepError,
   TraceEvent,
+  ValidateOptions,
+  ValidationIssue,
+  ValidationResult,
   Validate,
 } from './types';

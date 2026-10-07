@@ -47,3 +47,24 @@ export function resolveValue(value: unknown, ctx: Ctx): unknown {
   }
   return value;
 }
+
+export interface RefUse {
+  // Where the ref sits inside the walked value, e.g. 'body.items.0'; '' for the value itself.
+  at: string;
+  // The ref without its `$`, e.g. 'draft.id'.
+  path: string;
+}
+
+export function collectRefs(value: unknown, at = ''): RefUse[] {
+  const child = (key: string | number) => (at ? `${at}.${key}` : String(key));
+  if (typeof value === 'string') {
+    if (value.startsWith('$$')) return [];
+    if (value.startsWith('$')) return [{ at, path: value.slice(1) }];
+    return [...value.matchAll(TEMPLATE)].map((m) => ({ at, path: m[1] ?? '' }));
+  }
+  if (Array.isArray(value)) return value.flatMap((item, i) => collectRefs(item, child(i)));
+  if (typeof value === 'object' && value !== null) {
+    return Object.entries(value).flatMap(([k, v]) => collectRefs(v, child(k)));
+  }
+  return [];
+}
