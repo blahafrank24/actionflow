@@ -170,7 +170,7 @@ A malformed operation key throws when `apiActions` is called.
 The package ships no UI bindings. A UI integration is small, and it's best owned by the app or framework that knows its own state:
 
 - **Actions:** `form.*`, `table.*` and `router.*` are a few lines each over state the app already has, registered with `action()`.
-- **Run state:** a reactive wrapper such as `useSequence(flow, seq)` → `{ run, abort, status, trace }` is about 30 lines over `run()` and `onEvent`.
+- **Run state:** a reactive wrapper such as `useSequence(flow, steps, options?)` → `{ run, abort, status, trace, states, result }` is about 40 lines over `run()` and `onEvent`. `steps` and `options` can be refs or getters, so one composable serves a sequence picker. `states` comes from a pure `stepStates(steps, trace)` that a trace panel renders.
 
 The demo contains both in `demo/actions/` as reference code, and the README shows the composable as a recipe. A published `actionflow/vue` (or `/react`) entry gets added only if real users need one.
 
