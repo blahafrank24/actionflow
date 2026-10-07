@@ -1,6 +1,6 @@
 import { describe, expectTypeOf, it } from 'vitest';
 import { action, createFlow } from './index';
-import type { RunResult, TraceEvent } from './index';
+import type { RunResult, TraceEvent, ValidationIssue, ValidationResult } from './index';
 
 interface Draft {
   customer: string;
@@ -211,5 +211,40 @@ describe('run', () => {
     flow.run([{ action: 'ui.refresh', when: 'draft' }]);
     // @ts-expect-error onError must be abort or continue
     flow.run([{ action: 'ui.refresh', onError: 'retry' }]);
+  });
+});
+
+describe('validate', () => {
+  it('returns a union that narrows on ok', () => {
+    const result = flow.validate([]);
+    expectTypeOf(result).toEqualTypeOf<ValidationResult>();
+    if (result.ok) {
+      expectTypeOf(result).not.toHaveProperty('issues');
+      expectTypeOf(result.sequence).toBeArray();
+    } else {
+      expectTypeOf(result.issues).toEqualTypeOf<ValidationIssue[]>();
+      expectTypeOf(result).not.toHaveProperty('sequence');
+    }
+  });
+
+  it('makes index optional on an issue', () => {
+    expectTypeOf<ValidationIssue['index']>().toEqualTypeOf<number | undefined>();
+    expectTypeOf<ValidationIssue['message']>().toBeString();
+  });
+
+  it('accepts unknown input and feeds a valid sequence to run', () => {
+    const result = flow.validate(JSON.parse('[]') as unknown);
+    if (result.ok) expectTypeOf(flow.run(result.sequence)).resolves.toEqualTypeOf<RunResult>();
+  });
+
+  it('rejects bad options', () => {
+    // @ts-expect-error input must be a list of names
+    flow.validate([], { input: 'page' });
+    // @ts-expect-error input names are strings
+    flow.validate([], { input: [1] });
+    // @ts-expect-error unknown option
+    flow.validate([], { strict: true });
+    // @ts-expect-error the sequence argument is required
+    flow.validate();
   });
 });

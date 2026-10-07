@@ -73,6 +73,22 @@ export interface RunResult {
   error?: StepError;
 }
 
+export interface ValidationIssue {
+  // Absent for problems with the sequence as a whole.
+  index?: number;
+  // Where in the step the problem is, e.g. 'params.body.id' or 'when'; '' for the step itself.
+  path: string;
+  message: string;
+}
+
+export interface ValidateOptions {
+  // Names the caller will pass as `run`'s `input`, so refs to them are not reported as unknown.
+  input?: readonly string[];
+}
+
+export type ValidationResult =
+  { ok: true; sequence: RuntimeStep[] } | { ok: false; issues: ValidationIssue[] };
+
 type NeedsParams<A> = [ParamsOf<A>] extends [never]
   ? false
   : undefined extends ParamsOf<A>

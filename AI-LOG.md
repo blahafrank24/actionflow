@@ -33,3 +33,10 @@ Design, architecture and review are mine. Code is written by the agent from `doc
 - **Asked:** `resolve.ts` and `run.ts` per ARCHITECTURE §4.5, with `rollback`, abort and trace events. I asked for a plan first and approved it, plus three decisions the doc left open: unresolved refs fail the step, rollback also runs after an abort, and no `ctx.trace` handle.
 - **Went wrong (draft):** the agent's own rollback test expected a completed step *not* to be undone, which contradicted the rule it had just implemented. The runner was right and the test was wrong. A `sed` edit to add imports silently failed on macOS, which the typecheck caught.
 - **Changed (draft):** ARCHITECTURE §4.5 now states the four rules the steps left open, so the next session doesn't re-derive them.
+
+### M3: Runtime validation (2026-10-07)
+
+- **Asked:** `flow.validate(json)` with issues per step index. I asked for a plan first and approved it with three additions to §4.6: an `input` option, rejecting unknown step keys, and a `path` on every issue.
+- **Why those:** without `input`, a sequence reading a value passed to `run` could never validate. Without rejecting unknown keys, a typo like `onerror` would be dropped by the runner without a word.
+- **Went wrong (draft):** the agent's `collectRefs` test treated `'${$b}'` as "not a ref". The code was right: a leading `$` makes it a ref, same as in the runner and the types. The test was wrong again, as in M2.
+- **Changed (draft):** ref syntax is parsed in one place (`collectRefs`), so the validator and runner can't drift apart. ARCHITECTURE §4.6 now documents `input`, issue shape and the checks.
