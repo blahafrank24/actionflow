@@ -21,6 +21,7 @@ export type VariantKey = 'raw' | 'domain' | 'failing';
 
 export interface Variant {
   label: string;
+  description: string;
   steps: readonly RuntimeStep[];
   rollback: boolean;
 }
@@ -64,9 +65,26 @@ export function createDemo({ router, table, readForm, latencyMs }: DemoDeps) {
   ]);
 
   const variants: Record<VariantKey, Variant> = {
-    raw: { label: 'Endpoint actions', steps: raw, rollback: false },
-    domain: { label: 'Domain actions', steps: domain, rollback: false },
-    failing: { label: 'Failing send, with rollback', steps: failing, rollback: true },
+    raw: {
+      label: 'Endpoint actions',
+      description: 'The sequence names the endpoint: api:POST /invoices.',
+      steps: raw,
+      rollback: false,
+    },
+    domain: {
+      label: 'Domain actions',
+      description:
+        'The sequence names the business step: invoices.create. The send step is skipped unless notify is ticked.',
+      steps: domain,
+      rollback: false,
+    },
+    failing: {
+      label: 'Failing send, with rollback',
+      description:
+        'The mail service is down, so the send step fails. Rollback then undoes the table row and deletes the invoice.',
+      steps: failing,
+      rollback: true,
+    },
   };
 
   return { backend, client, flow, sequences: { raw, domain, failing }, variants };

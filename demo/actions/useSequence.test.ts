@@ -90,6 +90,22 @@ describe('useSequence', () => {
     expect(seq.trace.value).toHaveLength(first);
   });
 
+  it('resets to idle with an empty trace, but not while running', async () => {
+    const { flow, gate } = setup();
+    const seq = useSequence(flow, [{ action: 'wait' }]);
+    const running = seq.run();
+    seq.reset();
+    expect(seq.status.value).toBe('running');
+    gate.open();
+    await running;
+    expect(seq.trace.value.length).toBeGreaterThan(0);
+    seq.reset();
+    expect(seq.status.value).toBe('idle');
+    expect(seq.trace.value).toEqual([]);
+    expect(seq.result.value).toBeUndefined();
+    expect(seq.states.value.map((s) => s.status)).toEqual(['pending']);
+  });
+
   it('follows reactive steps and options, and applies rollback', async () => {
     const { flow } = setup();
     const steps = ref<{ action: string }[]>([{ action: 'ok' }, { action: 'fail' }]);
