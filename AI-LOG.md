@@ -60,3 +60,10 @@ Design, architecture and review are mine. Code is written by the agent from `doc
 - **Verified:** DOM tests mount the real app with a memory router and drive it like a user, covering all three variants, skip, rollback, abort and reset. I also served the demo and looked at it in the built-in browser, in dark and light mode and at phone width, since tests can't judge whether a rolled-back step reads clearly.
 - **Went wrong (draft):** the first component test run failed on every `.vue` import, because the Vitest config had no Vue plugin; only the demo's Vite config did. The fix was one line in the config. Two design slips came up while building. Switching variant would have shown the old trace laid over the new steps, so `useSequence` got a `reset()`. And the form reader had to return a copy: handing out the reactive form would let later edits rewrite a finished trace, which a test now pins.
 - **Changed (draft):** `Variant` has a `description` the UI shows under the picker. CI builds the demo. ARCHITECTURE needed no change. I did not touch repo settings: enabling GitHub Pages, going public and pinning stay with the author.
+
+### M6: README (2026-10-07)
+
+- **Asked:** pick up the README branch, check it against what exists, and prepare the release. I asked for a plan first and approved it, with the `v0.1.0` release and `npm publish` left to me.
+- **Verified:** the README's example is quoted from `docs/examples/quickstart.ts`, and a test pins that the two match and that the example runs and ends `ok`. Another test requires absolute links, so the page renders on npm. The `~~~` error messages match the `Fail` messages in `core/types.ts`.
+- **Went wrong (draft):** `npm pack --dry-run` showed the type-test fixture `openapi/fixture.d.ts` shipping in the tarball. The declaration build only excluded test files. It is now excluded in the Vite config.
+- **Open:** Changesets is not set up. The agent was blocked from adding the release config (public access, publish script), so that step is mine. The trace-panel GIF and the IDE-error screenshot still have to be captured by hand.
