@@ -33,7 +33,7 @@ const restrictImports = (paths, patterns) => ({
 });
 
 export default tseslint.config(
-  { ignores: ['node_modules', 'dist', 'demo/dist', 'coverage', 'docs/spike'] },
+  { ignores: ['node_modules', 'dist', 'demo/dist', 'coverage'] },
   js.configs.recommended,
   tseslint.configs.recommended,
   vue.configs['flat/recommended'],
