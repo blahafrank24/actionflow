@@ -20,6 +20,6 @@
       "actionflow/openapi": ["./src/openapi/index.ts"]
     }
   },
-  "include": ["src", "tests", "demo", "*.ts"],
+  "include": ["src", "tests", "demo", "docs/examples", "*.ts"],
   "exclude": ["node_modules", "dist", "demo/dist"]
 }
