@@ -39,7 +39,7 @@ One npm package with subpath exports. A single version and a single publish, wit
 | Entry                 | Contents                                                     | Peers                 |
 | --------------------- | ------------------------------------------------------------ | --------------------- |
 | `actionflow`          | `action`, `createFlow`, runner, ref resolution, validation   | none                  |
-| `actionflow/openapi`  | `apiActions(client)`: one typed action per OpenAPI operation | `openapi-fetch`       |
+| `actionflow/openapi`  | `apiActions(client, operations)`: typed actions for the listed OpenAPI operations | `openapi-fetch` |
 
 ```
 src/
@@ -75,7 +75,7 @@ const tableActions = {
 `createFlow(registry)` binds a registry and returns `{ defineSequence, run, validate }`. Types flow from the registry, so there is no global declaration merging.
 
 ```ts
-const flow = createFlow({ ...formActions(forms), ...apiActions(client), ...tableActions, ...routerActions(router) });
+const flow = createFlow({ ...formActions(forms), ...apiActions(client, ['POST /invoices']), ...tableActions, ...routerActions(router) });
 ```
 
 ### 4.3 Steps
@@ -150,17 +150,20 @@ Param **shapes** and ref **paths** (`$draft.nope`) aren't validated at runtime i
 
 ## 5. OpenAPI adapter
 
-The pipeline is `openapi.yaml` → `openapi-typescript` → `paths` type → `openapi-fetch` client → `apiActions(client)`.
+The pipeline is `openapi.yaml` → `openapi-typescript` → `paths` type → `openapi-fetch` client → `apiActions(client, operations)`.
 
-`apiActions` maps the `paths` type to one action per operation, keyed `api:METHOD /path`:
+`apiActions` turns the listed operations into actions keyed `api:METHOD /path`:
 
 ```ts
-{ action: 'api:GET /invoices/{id}', params: { path: { id: '$created.id' } }, as: 'invoice' }
+const api = apiActions(client, ['POST /invoices', 'GET /invoices/{id}']);
+// { action: 'api:GET /invoices/{id}', params: { path: { id: '$created.id' } }, as: 'invoice' }
 ```
 
-Params are `{ path?, query?, body? }`, matching openapi-fetch. The result is the typed 2xx body. A non-2xx response throws a `HttpError` carrying the status and the error body, so `onError` and `rollback` apply.
+The list is type-checked against `paths` (a typo or an operation the spec doesn't have is a compile error) and the registry type contains only the listed operations. Core looks actions up with `Object.hasOwn` and apps merge registries by spreading, so the registry has to be a plain object with real keys. `paths` is a type and is gone at runtime, so the client can't enumerate operations by itself. Passing the spec at runtime would ship it in the bundle. The list is the cheapest way to get real keys.
 
-No extra codegen is needed: the key encodes the method and path, which the runtime parses and the type system derives from `paths`.
+Params are `{ path?, query?, body? }`: `path` and `body` are required when the operation requires them, and `params` can be omitted when nothing is required. The result is the typed 2xx JSON body, or `undefined` when the response has none (a 204). The adapter calls `client.request(method, path, init)` and passes the run's `signal` through, so aborting cancels the fetch. A non-2xx response throws `HttpError` with `operation`, `status` and `body` (what openapi-fetch parsed as the error, an empty string when the response is empty), so `onError` and `rollback` apply. Network errors propagate unchanged. No action has an `undo`, because an HTTP call has no generic inverse. Wrap an endpoint in a domain action when it needs one. Only JSON bodies and responses are typed, and path-level `parameters` aren't read in v0.
+
+A malformed operation key throws when `apiActions` is called.
 
 ## 6. UI bindings (not in the package)
 
