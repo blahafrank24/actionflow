@@ -70,6 +70,6 @@ npm run lint        # eslint + prettier --check
 - Follow `docs/PLAN.md`, one milestone per session. Start by writing a plan and wait for approval before writing code.
 - If the plan needs to deviate from ARCHITECTURE.md, say so explicitly. When the design changes, update ARCHITECTURE.md in the same commit.
 - Done means `npm run lint && npm run typecheck && npm run test` are green. A hook checks this when you finish.
-- Propose commits. The author approves them. Never push.
+- Propose commits. The author approves them. Push only the session's feature branch (never `main`, never force-push) so cloud sessions can hand work back. The author reviews and merges.
 - Keep the README honest: only document what exists.
 - At the end of a milestone, draft an `AI-LOG.md` entry. The author edits it.
