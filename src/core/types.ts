@@ -22,6 +22,57 @@ export type Ref = `$${string}`;
 
 export type OnError = 'abort' | 'continue';
 
+// What the runner sees: the same shape `Validate` enforces for literals, without the type-level checks.
+export interface RuntimeStep {
+  action: string;
+  params?: unknown;
+  as?: string;
+  when?: Ref;
+  onError?: OnError;
+}
+
+export interface StepError {
+  index: number;
+  action: string;
+  error: unknown;
+}
+
+export type TraceEvent =
+  | { type: 'step:start'; index: number; action: string; params: unknown }
+  | { type: 'step:skip'; index: number; action: string }
+  | {
+      type: 'step:done';
+      index: number;
+      action: string;
+      params: unknown;
+      result: unknown;
+      durationMs: number;
+    }
+  | {
+      type: 'step:error';
+      index: number;
+      action: string;
+      error: unknown;
+      durationMs: number;
+    }
+  | { type: 'step:undo'; index: number; action: string; error?: unknown };
+
+export interface RunOptions {
+  signal?: AbortSignal;
+  input?: Record<string, unknown>;
+  onEvent?: (event: TraceEvent) => void;
+  rollback?: boolean;
+}
+
+export type RunStatus = 'ok' | 'failed' | 'aborted';
+
+export interface RunResult {
+  status: RunStatus;
+  ctx: Record<string, unknown>;
+  trace: TraceEvent[];
+  error?: StepError;
+}
+
 type NeedsParams<A> = [ParamsOf<A>] extends [never]
   ? false
   : undefined extends ParamsOf<A>

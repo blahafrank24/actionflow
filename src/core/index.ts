@@ -11,5 +11,11 @@ export type {
   StepLike,
   Registry,
   ResultOf,
+  RunOptions,
+  RunResult,
+  RunStatus,
+  RuntimeStep,
+  StepError,
+  TraceEvent,
   Validate,
 } from './types';
