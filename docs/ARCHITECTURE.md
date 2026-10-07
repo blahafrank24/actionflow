@@ -68,7 +68,7 @@ const tableActions = {
 };
 ```
 
-`ctx` is a single object: `{ signal }`. Actions must respect `signal`. A `trace` handle may join it when the runner lands (M2).
+`ctx` is a single object: `{ signal }`. Actions must respect `signal`. There is no `trace` handle in v0: nothing needs it yet.
 
 ### 4.2 Flow
 
@@ -123,6 +123,13 @@ Pipeline per step:
 4. **Execute.** Call the action with the params and `{ signal }`. Emit `step:start`, then `step:done` with the result and duration.
 5. **Store.** If `as` is set, `ctx[as] = result`.
 6. **Errors.** With `onError: 'continue'`, record the error and move on. Otherwise stop with `failed`. If `rollback: true`, call `undo` on completed steps in reverse order and emit `step:undo` for each.
+
+Rules the steps above leave open:
+
+- **Unresolved refs fail the step.** A name can be missing from `ctx` in a well-typed sequence, for example when its step was skipped or failed under `continue`. A missing name or path in a ref, a `when` or a template fails that step with `Unresolved ref: $name` before the action runs, and `onError` applies as usual.
+- **Rollback also covers `aborted` runs.** Only steps that completed and define `undo` are undone. Skipped steps and steps that failed under `continue` are not. Undos get a fresh, non-aborted signal. An `undo` that throws is recorded on its `step:undo` event and the remaining undos still run.
+- **Abort wins over `onError`.** An action that throws while the signal is aborted ends the run as `aborted`, even with `onError: 'continue'`.
+- **Unknown actions throw up front**, before any step runs, so a bad sequence has no side effects.
 
 `run` never throws for step failures. It returns a result. It throws only for programmer errors, such as an unknown action in an unvalidated sequence.
 

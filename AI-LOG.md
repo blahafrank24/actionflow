@@ -27,3 +27,9 @@ Design, architecture and review are mine. Code is written by the agent from `doc
 - **Went wrong (draft):** the spike's error messages never reached the editor. A bad ref was reported as `Type 'string' is not assignable to type 'never'`, because the message string was intersected with the inferred literal (`S & Validate<S>`). The spike's `@ts-expect-error` tests passed anyway, since they only check that an error exists, so this stayed hidden until I printed the real diagnostics. Also, a bad action name or `onError` value failed the whole call rather than the step, because the argument constraint rejected it first.
 - **Changed (draft):** messages are now intersected into the written value (`"$drafty" & { error: "Unknown ref: $drafty" }`), and the call constraint is loosened to `{ action: string }` so every check happens per step in `Validate`. Action-name completion is kept with `string & {}`. `ctx` stays `{ signal }` until M2.
 - **Open:** the README's IDE-error screenshot has to be taken by hand; the exact diagnostics are in the type test file.
+
+### M2: Runner (2026-10-07)
+
+- **Asked:** `resolve.ts` and `run.ts` per ARCHITECTURE §4.5, with `rollback`, abort and trace events. I asked for a plan first and approved it, plus three decisions the doc left open: unresolved refs fail the step, rollback also runs after an abort, and no `ctx.trace` handle.
+- **Went wrong (draft):** the agent's own rollback test expected a completed step *not* to be undone, which contradicted the rule it had just implemented. The runner was right and the test was wrong. A `sed` edit to add imports silently failed on macOS, which the typecheck caught.
+- **Changed (draft):** ARCHITECTURE §4.5 now states the four rules the steps left open, so the next session doesn't re-derive them.

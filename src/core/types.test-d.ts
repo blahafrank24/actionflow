@@ -1,5 +1,6 @@
-import { expectTypeOf, it } from 'vitest';
+import { describe, expectTypeOf, it } from 'vitest';
 import { action, createFlow } from './index';
+import type { RunResult, TraceEvent } from './index';
 
 interface Draft {
   customer: string;
@@ -156,5 +157,59 @@ it('types undo from params and result', () => {
   action((p: { id: string }) => p.id.length, {
     // @ts-expect-error result is a number, not a string
     undo: (_params, result: string) => void result,
+  });
+});
+
+describe('run', () => {
+  it('returns a RunResult and accepts typed sequences', () => {
+    const seq = flow.defineSequence([
+      { action: 'form.read', params: { form: 'invoice' }, as: 'draft' },
+      { action: 'ui.refresh' },
+    ]);
+    expectTypeOf(flow.run(seq)).resolves.toEqualTypeOf<RunResult>();
+    expectTypeOf<RunResult['status']>().toEqualTypeOf<'ok' | 'failed' | 'aborted'>();
+  });
+
+  it('types onEvent as a TraceEvent callback', () => {
+    flow.run([], {
+      onEvent: (e) => {
+        expectTypeOf(e).toEqualTypeOf<TraceEvent>();
+        if (e.type === 'step:done') expectTypeOf(e.durationMs).toBeNumber();
+        if (e.type === 'step:skip') expectTypeOf(e).not.toHaveProperty('durationMs');
+      },
+    });
+  });
+
+  it('narrows the trace event union on type', () => {
+    const check = (e: TraceEvent): number => {
+      switch (e.type) {
+        case 'step:start':
+        case 'step:skip':
+        case 'step:done':
+        case 'step:error':
+        case 'step:undo':
+          return e.index;
+        default:
+          return e satisfies never;
+      }
+    };
+    expectTypeOf(check).returns.toBeNumber();
+  });
+
+  it('rejects bad options and steps', () => {
+    // @ts-expect-error rollback must be a boolean
+    flow.run([], { rollback: 'yes' });
+    // @ts-expect-error input must be a record
+    flow.run([], { input: 5 });
+    // @ts-expect-error onEvent receives a TraceEvent, not a string
+    flow.run([], { onEvent: (e: string) => e });
+    // @ts-expect-error unknown option
+    flow.run([], { retries: 3 });
+    // @ts-expect-error a step needs an action name
+    flow.run([{ params: {} }]);
+    // @ts-expect-error when must be a $ref
+    flow.run([{ action: 'ui.refresh', when: 'draft' }]);
+    // @ts-expect-error onError must be abort or continue
+    flow.run([{ action: 'ui.refresh', onError: 'retry' }]);
   });
 });
