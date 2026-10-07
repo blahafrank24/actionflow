@@ -38,9 +38,16 @@ export function useSequence(
     return outcome;
   }
 
+  function reset() {
+    if (status.value === 'running') return;
+    trace.value = [];
+    result.value = undefined;
+    status.value = 'idle';
+  }
+
   function abort() {
     controller?.abort();
   }
 
-  return { status, trace, states, result, run, abort };
+  return { status, trace, states, result, run, abort, reset };
 }
