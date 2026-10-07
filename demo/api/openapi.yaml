@@ -1,0 +1,113 @@
+openapi: 3.0.3
+info:
+  title: Invoices
+  version: 0.1.0
+paths:
+  /invoices:
+    get:
+      operationId: listInvoices
+      parameters:
+        - name: sent
+          in: query
+          required: false
+          schema: { type: boolean }
+      responses:
+        '200':
+          description: All invoices
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/Invoice' }
+    post:
+      operationId: createInvoice
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/NewInvoice' }
+      responses:
+        '201':
+          description: The created invoice
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Invoice' }
+        '422':
+          description: The invoice is invalid
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Problem' }
+  /invoices/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema: { type: string }
+    get:
+      operationId: getInvoice
+      responses:
+        '200':
+          description: The invoice
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Invoice' }
+        '404':
+          description: No such invoice
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Problem' }
+    delete:
+      operationId: deleteInvoice
+      responses:
+        '204':
+          description: Deleted
+        '404':
+          description: No such invoice
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Problem' }
+  /invoices/{id}/send:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema: { type: string }
+    post:
+      operationId: sendInvoice
+      responses:
+        '200':
+          description: The invoice, marked as sent
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Invoice' }
+        '404':
+          description: No such invoice
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Problem' }
+        '500':
+          description: The mail service is down
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Problem' }
+components:
+  schemas:
+    NewInvoice:
+      type: object
+      required: [customer, amount]
+      properties:
+        customer: { type: string }
+        amount: { type: number }
+    Invoice:
+      type: object
+      required: [id, customer, amount, sent]
+      properties:
+        id: { type: string }
+        customer: { type: string }
+        amount: { type: number }
+        sent: { type: boolean }
+    Problem:
+      type: object
+      required: [message]
+      properties:
+        message: { type: string }
