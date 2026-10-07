@@ -5,3 +5,4 @@ coverage
 package-lock.json
 *.md
 .claude
+demo/api/schema.d.ts

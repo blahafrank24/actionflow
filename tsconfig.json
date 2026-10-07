@@ -14,7 +14,11 @@
     "verbatimModuleSyntax": true,
     "isolatedModules": true,
     "skipLibCheck": true,
-    "noEmit": true
+    "noEmit": true,
+    "paths": {
+      "actionflow": ["./src/core/index.ts"],
+      "actionflow/openapi": ["./src/openapi/index.ts"]
+    }
   },
   "include": ["src", "tests", "demo", "*.ts"],
   "exclude": ["node_modules", "dist", "demo/dist"]
