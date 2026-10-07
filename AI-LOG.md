@@ -18,5 +18,5 @@ Design, architecture and review are mine. Code is written by the agent from `doc
 
 - **Asked:** extract the action layer of vue-schema-admin (my config-driven admin framework) into a standalone library design, check that the riskiest part (typed refs between steps) is feasible, then scaffold the repo. The spike lives in `docs/spike/` until M1 replaces it.
 - **Spike:** a ~100-line prototype of `defineSequence` with recursive tuple validation. Unknown refs, use-before-define, wrong ref types and unknown actions all failed to compile as intended on the first pass. One finding: an unknown action name is reported on the whole call rather than on the step. Revisit in M1.
-- **Went wrong:** _(fill in)_
-- **Changed:** _(fill in)_
+- **Went wrong (draft):** the scaffold's first typecheck failed on Node globals (`import.meta.dirname`, `node:path`) because `@types/node` was missing, and Vitest's type tests failed on `.vue` imports because they default to plain `tsc`.
+- **Changed (draft):** added `@types/node`, and set `typecheck.checker` to `vue-tsc` in the Vitest config. No rule or `tsconfig` strictness was loosened. The ESLint boundary rules now have tests in `tests/lint-guardrails.test.ts`, so a config edit can't silently drop them.

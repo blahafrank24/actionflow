@@ -1,0 +1,59 @@
+{
+  "name": "actionflow",
+  "version": "0.0.0",
+  "description": "Typed, serializable action sequences for UI apps.",
+  "license": "MIT",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/core/index.d.ts",
+      "import": "./dist/core.js"
+    },
+    "./openapi": {
+      "types": "./dist/openapi/index.d.ts",
+      "import": "./dist/openapi.js"
+    }
+  },
+  "scripts": {
+    "dev": "vite --config demo/vite.config.ts",
+    "build": "vite build",
+    "build:demo": "vite build --config demo/vite.config.ts",
+    "gen:api": "openapi-typescript demo/api/openapi.yaml -o demo/api/schema.d.ts",
+    "test": "vitest run --typecheck",
+    "typecheck": "vue-tsc --noEmit",
+    "lint": "eslint . && prettier --check ."
+  },
+  "peerDependencies": {
+    "openapi-fetch": "^0.13.0"
+  },
+  "peerDependenciesMeta": {
+    "openapi-fetch": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.0.0",
+    "@types/node": "^22.20.5",
+    "@vitejs/plugin-vue": "^5.0.0",
+    "eslint": "^9.0.0",
+    "eslint-config-prettier": "^10.0.0",
+    "eslint-plugin-vue": "^9.0.0",
+    "globals": "^15.0.0",
+    "happy-dom": "^17.0.0",
+    "openapi-fetch": "^0.13.0",
+    "openapi-typescript": "^7.0.0",
+    "prettier": "^3.0.0",
+    "typescript": "~5.7.0",
+    "typescript-eslint": "^8.0.0",
+    "vite": "^6.0.0",
+    "vite-plugin-dts": "^4.0.0",
+    "vitest": "^3.0.0",
+    "vue": "^3.5.0",
+    "vue-router": "^4.0.0",
+    "vue-tsc": "^2.2.0"
+  }
+}
