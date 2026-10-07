@@ -6,7 +6,7 @@ One milestone per session. Each one ends green (`lint`, `typecheck`, `test`) wit
 
 ## M0: Scaffold
 
-- ✅ Design docs and a type spike (`docs/spike/`: typed refs verified with `tsc --strict`). Exclude `docs/spike` from `tsconfig.json` (it uses `any` on purpose) and delete it once M1 lands.
+- ✅ Design docs and a type spike (`docs/spike/`: typed refs verified with `tsc --strict`). Removed in M1.
 
 - npm package with `actionflow` and `actionflow/openapi` entries. Vite library mode + `vite-plugin-dts`.
 - TS strict, ESLint boundary rules (core imports no framework, entries don't import each other, no `fetch` in `src/`), Prettier.

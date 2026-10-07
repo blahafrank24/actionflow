@@ -17,5 +17,5 @@
     "noEmit": true
   },
   "include": ["src", "tests", "demo", "*.ts"],
-  "exclude": ["node_modules", "dist", "demo/dist", "docs/spike"]
+  "exclude": ["node_modules", "dist", "demo/dist"]
 }

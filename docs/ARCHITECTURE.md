@@ -68,7 +68,7 @@ const tableActions = {
 };
 ```
 
-`ctx` is a single object: `{ signal, trace }`. Actions must respect `signal`.
+`ctx` is a single object: `{ signal }`. Actions must respect `signal`. A `trace` handle may join it when the runner lands (M2).
 
 ### 4.2 Flow
 
@@ -104,7 +104,7 @@ Typing (verified in a spike before M1): `defineSequence` takes the steps as a `c
 2. the path exists on that result type,
 3. the resolved type is assignable to the param it's used for.
 
-Each failure produces a targeted error on the offending step (`Unknown ref: $drafty`, `Ref $draft has the wrong type`).
+Each failure produces a targeted error on the offending value (`Unknown ref: $drafty`, `Ref $draft has the wrong type`). The message is intersected into the written value's expected type (`"$drafty" & { error: "Unknown ref: $drafty" }`), because a bare message string would collapse to `never` against the inferred literal. `when` refs, template placeholders, `onError` and action names are checked the same way.
 
 ### 4.5 Runner
 
