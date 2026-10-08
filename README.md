@@ -15,6 +15,8 @@ UI handlers keep doing the same few things: read a form, call an API, update a t
 - **Observable.** Every run produces a trace: resolved params, results, timings, skips, errors and undo.
 - **No UI framework.** Zero runtime dependencies, plus an optional `actionflow/openapi` entry.
 
+![The demo's trace panel running a sequence, then a failing one that rolls back](https://raw.githubusercontent.com/blahafrank24/actionflow/main/docs/assets/trace-panel.gif)
+
 ## Example
 
 <!-- quickstart -->
@@ -63,6 +65,10 @@ flow.defineSequence([
 //        ~~~~~~~~~~~~~~~~
 // Type '"invoices.creat"' is not assignable to type '"invoices.creat" & { readonly error: "Unknown action: invoices.creat"; }'.
 ```
+
+In the editor, the same error reads:
+
+![VS Code hover: Unknown ref: $drafty](https://raw.githubusercontent.com/blahafrank24/actionflow/main/docs/assets/ide-error.png)
 
 A ref to a step that comes later is reported as an unknown ref, because only earlier steps are in scope. Template placeholders, `when` refs and nested paths (`$draft.customer`) are checked the same way.
 
