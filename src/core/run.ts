@@ -1,4 +1,4 @@
-import { lookup, resolveValue } from './resolve';
+import { lookup, resolveValue } from './resolve.js';
 import type {
   ActionContext,
   Registry,
@@ -8,7 +8,7 @@ import type {
   RuntimeStep,
   StepError,
   TraceEvent,
-} from './types';
+} from './types.js';
 
 interface LooseAction {
   run: (params: unknown, ctx: ActionContext) => unknown;

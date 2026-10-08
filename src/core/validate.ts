@@ -1,11 +1,11 @@
-import { collectRefs } from './resolve';
+import { collectRefs } from './resolve.js';
 import type {
   Registry,
   RuntimeStep,
   ValidateOptions,
   ValidationIssue,
   ValidationResult,
-} from './types';
+} from './types.js';
 
 const STEP_KEYS = new Set(['action', 'params', 'as', 'when', 'onError']);
 

@@ -1,6 +1,6 @@
-export { action } from './action';
-export type { ActionOptions } from './action';
-export { createFlow } from './flow';
+export { action } from './action.js';
+export type { ActionOptions } from './action.js';
+export { createFlow } from './flow.js';
 export type {
   ActionContext,
   ActionDef,
@@ -21,4 +21,4 @@ export type {
   ValidationIssue,
   ValidationResult,
   Validate,
-} from './types';
+} from './types.js';

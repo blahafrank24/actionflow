@@ -1,2 +1,2 @@
-export { apiActions, HttpError } from './apiActions';
-export type { ApiActions, OperationKey } from './apiActions';
+export { apiActions, HttpError } from './apiActions.js';
+export type { ApiActions, OperationKey } from './apiActions.js';
