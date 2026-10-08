@@ -4,7 +4,11 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
   plugins: [
-    dts({ include: ['src'], entryRoot: 'src', exclude: ['**/*.test.ts', '**/*.test-d.ts'] }),
+    dts({
+      include: ['src'],
+      entryRoot: 'src',
+      exclude: ['**/*.test.ts', '**/*.test-d.ts', 'src/openapi/fixture.ts'],
+    }),
   ],
   build: {
     lib: {
