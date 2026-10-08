@@ -1,6 +1,6 @@
 import type { Client } from 'openapi-fetch';
-import { action } from '../core';
-import type { ActionDef } from '../core';
+import { action } from '../core/index.js';
+import type { ActionDef } from '../core/index.js';
 
 type Method = 'get' | 'put' | 'post' | 'delete' | 'options' | 'head' | 'patch' | 'trace';
 type OkStatus = 200 | 201 | 202 | 203 | 204 | 206 | 207 | '2XX';

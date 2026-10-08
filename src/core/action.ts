@@ -1,4 +1,4 @@
-import type { ActionContext, ActionDef } from './types';
+import type { ActionContext, ActionDef } from './types.js';
 
 export interface ActionOptions<P, R> {
   undo?: (params: P, result: R, ctx: ActionContext) => void | Promise<void>;

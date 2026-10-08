@@ -1,5 +1,5 @@
-import { run } from './run';
-import { validateSequence } from './validate';
+import { run } from './run.js';
+import { validateSequence } from './validate.js';
 import type {
   Registry,
   RunOptions,
@@ -9,7 +9,7 @@ import type {
   Validate,
   ValidateOptions,
   ValidationResult,
-} from './types';
+} from './types.js';
 
 export function createFlow<R extends Registry>(registry: R) {
   return {
