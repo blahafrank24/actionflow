@@ -1,6 +1,6 @@
 {
   "name": "actionflow",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Typed, serializable action sequences for UI apps.",
   "license": "MIT",
   "repository": {
