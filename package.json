@@ -3,6 +3,24 @@
   "version": "0.0.0",
   "description": "Typed, serializable action sequences for UI apps.",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/blahafrank24/actionflow.git"
+  },
+  "homepage": "https://github.com/blahafrank24/actionflow#readme",
+  "bugs": "https://github.com/blahafrank24/actionflow/issues",
+  "keywords": [
+    "typescript",
+    "actions",
+    "workflow",
+    "sequence",
+    "serializable",
+    "openapi",
+    "type-safe"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
   "type": "module",
   "files": [
     "dist"
