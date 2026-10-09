@@ -6,9 +6,12 @@ export default defineConfig({
   plugins: [vue()],
   resolve: {
     alias: [
-      { find: /^actionflow$/, replacement: resolve(import.meta.dirname, 'src/core/index.ts') },
       {
-        find: /^actionflow\/openapi$/,
+        find: /^@yung_papa\/actionflow$/,
+        replacement: resolve(import.meta.dirname, 'src/core/index.ts'),
+      },
+      {
+        find: /^@yung_papa\/actionflow\/openapi$/,
         replacement: resolve(import.meta.dirname, 'src/openapi/index.ts'),
       },
     ],

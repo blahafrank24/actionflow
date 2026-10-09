@@ -1,4 +1,4 @@
-import { action, createFlow } from 'actionflow';
+import { action, createFlow } from '@yung_papa/actionflow';
 import { describe, expect, it } from 'vitest';
 import { nextTick, ref } from 'vue';
 import { useSequence } from './useSequence';

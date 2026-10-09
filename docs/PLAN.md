@@ -8,7 +8,7 @@ One milestone per session. Each one ends green (`lint`, `typecheck`, `test`) wit
 
 - ✅ Design docs and a type spike (`docs/spike/`: typed refs verified with `tsc --strict`). Removed in M1.
 
-- npm package with `actionflow` and `actionflow/openapi` entries. Vite library mode + `vite-plugin-dts`.
+- npm package with `actionflow` and `@yung_papa/actionflow/openapi` entries. Vite library mode + `vite-plugin-dts`.
 - TS strict, ESLint boundary rules (core imports no framework, entries don't import each other, no `fetch` in `src/`), Prettier.
 - Vitest with type tests (`*.test-d.ts`). CI: lint → typecheck → test → build. Pages workflow for the demo.
 - CLAUDE.md, ARCHITECTURE.md, PLAN.md, AI-LOG.md, and Claude hooks (lint on edit, green tree on stop).

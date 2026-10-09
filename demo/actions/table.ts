@@ -1,4 +1,4 @@
-import { action } from 'actionflow';
+import { action } from '@yung_papa/actionflow';
 import type { Invoice } from '../api/fakeBackend';
 
 export interface InvoiceTable {

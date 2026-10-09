@@ -4,7 +4,7 @@ Guidance for Claude Code when working in this repository.
 
 ## What this repo is
 
-`actionflow` is a small TypeScript library for typed, serializable **action sequences**: an ordered list of steps (read a form, call an API, update a table, navigate) that a runner executes against a registry of typed actions. It has no UI framework dependency. There's one optional entry, `actionflow/openapi`. The demo is a Vue app.
+`actionflow` is a small TypeScript library for typed, serializable **action sequences**: an ordered list of steps (read a form, call an API, update a table, navigate) that a runner executes against a registry of typed actions. It has no UI framework dependency. There's one optional entry, `@yung_papa/actionflow/openapi`. The demo is a Vue app.
 
 It's the action module of vue-schema-admin, the author's config-driven Vue admin framework, extracted so it stays usable on its own. Never add a dependency on vue-schema-admin. It depends on this package, not the other way round.
 

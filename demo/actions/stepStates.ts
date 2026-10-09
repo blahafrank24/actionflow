@@ -1,4 +1,4 @@
-import type { RuntimeStep, TraceEvent } from 'actionflow';
+import type { RuntimeStep, TraceEvent } from '@yung_papa/actionflow';
 
 export type StepStatus = 'pending' | 'running' | 'done' | 'skipped' | 'error';
 
