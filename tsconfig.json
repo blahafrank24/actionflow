@@ -16,8 +16,8 @@
     "skipLibCheck": true,
     "noEmit": true,
     "paths": {
-      "actionflow": ["./src/core/index.ts"],
-      "actionflow/openapi": ["./src/openapi/index.ts"]
+      "@yung_papa/actionflow": ["./src/core/index.ts"],
+      "@yung_papa/actionflow/openapi": ["./src/openapi/index.ts"]
     }
   },
   "include": ["src", "tests", "demo", "docs/examples", "*.ts"],

@@ -39,7 +39,7 @@ One npm package with subpath exports. A single version and a single publish, wit
 | Entry                 | Contents                                                     | Peers                 |
 | --------------------- | ------------------------------------------------------------ | --------------------- |
 | `actionflow`          | `action`, `createFlow`, runner, ref resolution, validation   | none                  |
-| `actionflow/openapi`  | `apiActions(client, operations)`: typed actions for the listed OpenAPI operations | `openapi-fetch` |
+| `@yung_papa/actionflow/openapi`  | `apiActions(client, operations)`: typed actions for the listed OpenAPI operations | `openapi-fetch` |
 
 ```
 src/

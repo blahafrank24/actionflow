@@ -1,4 +1,4 @@
-import { action } from 'actionflow';
+import { action } from '@yung_papa/actionflow';
 
 export interface Navigator {
   push(to: string): unknown;

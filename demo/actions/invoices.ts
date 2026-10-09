@@ -1,5 +1,5 @@
-import { action } from 'actionflow';
-import { apiActions } from 'actionflow/openapi';
+import { action } from '@yung_papa/actionflow';
+import { apiActions } from '@yung_papa/actionflow/openapi';
 import type { Client } from 'openapi-fetch';
 import type { NewInvoice } from '../api/fakeBackend';
 import type { paths } from '../api/schema';

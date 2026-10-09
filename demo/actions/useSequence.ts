@@ -1,4 +1,10 @@
-import type { RunOptions, RunResult, RunStatus, RuntimeStep, TraceEvent } from 'actionflow';
+import type {
+  RunOptions,
+  RunResult,
+  RunStatus,
+  RuntimeStep,
+  TraceEvent,
+} from '@yung_papa/actionflow';
 import { computed, ref, shallowRef, toValue } from 'vue';
 import type { MaybeRefOrGetter } from 'vue';
 import { stepStates } from './stepStates';

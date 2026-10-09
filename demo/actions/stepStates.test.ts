@@ -1,4 +1,4 @@
-import type { RuntimeStep, TraceEvent } from 'actionflow';
+import type { RuntimeStep, TraceEvent } from '@yung_papa/actionflow';
 import { describe, expect, it } from 'vitest';
 import { stepStates } from './stepStates';
 

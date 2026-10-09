@@ -1,4 +1,4 @@
-import { HttpError } from 'actionflow/openapi';
+import { HttpError } from '@yung_papa/actionflow/openapi';
 import { describe, expect, it } from 'vitest';
 import { formatError, formatValue } from './format';
 

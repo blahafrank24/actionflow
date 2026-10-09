@@ -1,4 +1,4 @@
-import { action, createFlow } from 'actionflow';
+import { action, createFlow } from '@yung_papa/actionflow';
 
 const flow = createFlow({
   'form.read': action(() => ({ customer: 'Ada', amount: 120 })),
