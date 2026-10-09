@@ -1,12 +1,12 @@
 # actionflow
 
-[![CI](https://github.com/blahafrank24/actionflow/actions/workflows/ci.yml/badge.svg)](https://github.com/blahafrank24/actionflow/actions/workflows/ci.yml)
+[![CI](https://github.com/blahafrank24/actionflow/actions/workflows/ci.yml/badge.svg)](https://github.com/blahafrank24/actionflow/actions/workflows/ci.yml) [![npm](https://img.shields.io/npm/v/actionflow)](https://www.npmjs.com/package/actionflow)
 
 Typed, serializable action sequences for UI apps.
 
 **[Live demo](https://blahafrank24.github.io/actionflow/)** · [Architecture](https://github.com/blahafrank24/actionflow/blob/main/docs/ARCHITECTURE.md) · [How it was built](https://github.com/blahafrank24/actionflow/blob/main/AI-LOG.md)
 
-> **Status:** pre-release. It is not on npm yet, and the API may change before 1.0.
+> **Status:** early release. The API may change before 1.0.
 
 UI handlers keep doing the same few things: read a form, call an API, update a table, navigate. Written as code, each handler is a one-off: you can't inspect it, ship it from a server, or render it in a debugger. `actionflow` describes them as **data**: an ordered list of steps that a runner executes against a registry of typed actions.
 
@@ -16,6 +16,14 @@ UI handlers keep doing the same few things: read a form, call an API, update a t
 - **No UI framework.** Zero runtime dependencies, plus an optional `actionflow/openapi` entry.
 
 ![The demo's trace panel running a sequence, then a failing one that rolls back](https://raw.githubusercontent.com/blahafrank24/actionflow/main/docs/assets/trace-panel.gif)
+
+## Install
+
+```bash
+npm install actionflow
+```
+
+The optional `actionflow/openapi` entry needs [`openapi-fetch`](https://openapi-ts.dev/openapi-fetch/) as a peer dependency (`npm install openapi-fetch`). The core entry has no dependencies. ESM only.
 
 ## Example
 
