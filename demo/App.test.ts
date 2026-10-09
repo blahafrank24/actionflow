@@ -80,9 +80,9 @@ describe('demo app', () => {
     await vi.waitFor(() => expect(runStatus(el)).toBe('Succeeded'));
     expect(statuses(el)).toEqual(['done', 'done', 'done', 'done']);
     expect(router.currentRoute.value.fullPath).toBe('/invoices/inv-1');
-    await vi.waitFor(() => expect(el.textContent).toContain('Customer 7'));
+    await vi.waitFor(() => expect(el.querySelector('.facts')?.textContent).toContain('42'));
+    expect(el.textContent).toContain('Customer 7');
     expect(el.querySelector('#detail-title')?.textContent).toBe('Invoice inv-1');
-    expect(el.querySelector('.facts')?.textContent).toContain('42');
   });
 
   it('lists the created invoices on the home route', async () => {
