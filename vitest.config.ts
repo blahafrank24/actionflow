@@ -7,11 +7,11 @@ export default defineConfig({
   resolve: {
     alias: [
       {
-        find: /^@yung_papa\/actionflow$/,
+        find: /^@blahafrank24\/actionflow$/,
         replacement: resolve(import.meta.dirname, 'src/core/index.ts'),
       },
       {
-        find: /^@yung_papa\/actionflow\/openapi$/,
+        find: /^@blahafrank24\/actionflow\/openapi$/,
         replacement: resolve(import.meta.dirname, 'src/openapi/index.ts'),
       },
     ],

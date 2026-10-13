@@ -1,6 +1,6 @@
 {
-  "name": "@yung_papa/actionflow",
-  "version": "0.1.0",
+  "name": "@blahafrank24/actionflow",
+  "version": "0.1.1",
   "description": "Typed, serializable action sequences for UI apps.",
   "license": "MIT",
   "repository": {

@@ -4,7 +4,7 @@ import type {
   RunStatus,
   RuntimeStep,
   TraceEvent,
-} from '@yung_papa/actionflow';
+} from '@blahafrank24/actionflow';
 import { computed, ref, shallowRef, toValue } from 'vue';
 import type { MaybeRefOrGetter } from 'vue';
 import { stepStates } from './stepStates';

@@ -10,8 +10,8 @@ const work = mkdtempSync(join(tmpdir(), 'actionflow-pack-'));
 // An unresolvable import inside the published .d.ts turns every type into `any`,
 // so the @ts-expect-error below goes unused and tsc fails.
 const consumer = `
-import { action, createFlow } from '@yung_papa/actionflow';
-import { apiActions } from '@yung_papa/actionflow/openapi';
+import { action, createFlow } from '@blahafrank24/actionflow';
+import { apiActions } from '@blahafrank24/actionflow/openapi';
 
 const flow = createFlow({ 'a.one': action(() => ({ id: 'x' })) });
 flow.defineSequence([{ action: 'a.one', as: 'o' }]);
@@ -21,7 +21,7 @@ export { apiActions };
 `;
 
 beforeAll(() => {
-  const pkg = join(work, 'node_modules', '@yung_papa/actionflow');
+  const pkg = join(work, 'node_modules', '@blahafrank24/actionflow');
   mkdirSync(pkg, { recursive: true });
   const vite = join(root, 'node_modules/vite/bin/vite.js');
   execFileSync(process.execPath, [vite, 'build', '--outDir', join(pkg, 'dist'), '--emptyOutDir'], {

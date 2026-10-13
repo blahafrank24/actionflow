@@ -10,8 +10,11 @@ export default defineConfig({
   plugins: [vue()],
   resolve: {
     alias: [
-      { find: /^@yung_papa\/actionflow$/, replacement: resolve(src, 'core/index.ts') },
-      { find: /^@yung_papa\/actionflow\/openapi$/, replacement: resolve(src, 'openapi/index.ts') },
+      { find: /^@blahafrank24\/actionflow$/, replacement: resolve(src, 'core/index.ts') },
+      {
+        find: /^@blahafrank24\/actionflow\/openapi$/,
+        replacement: resolve(src, 'openapi/index.ts'),
+      },
     ],
   },
   build: { outDir: 'dist', emptyOutDir: true },

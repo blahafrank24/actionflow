@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { RuntimeStep } from '@yung_papa/actionflow';
+import type { RuntimeStep } from '@blahafrank24/actionflow';
 
 defineProps<{ steps: readonly RuntimeStep[] }>();
 </script>
